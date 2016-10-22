@@ -1,0 +1,97 @@
+（＋ 12 2）
+（＋ 12 12）
+(+ 123 3)
+(println "Hello")
+(println "你好")
+(defn hello [name]
+  (println "Hello," name))
+(hello "刘洋")
+(gensym l)
+(gensym "l")
+(require 'clojure.contrib.str-utils)
+(def ^:dynamic v 1)
+(defn f1 []
+  (println "f1: v =" v)) ; global binding
+(f1)
+(defn f2 []
+  (println "f2: before let v =" v) ; global binding
+  (let [v 2] ; creates local binding v that shadows global one
+    (println "f2: in let, v =" v) ; local binding
+    (f1))
+  (println "f2: after let v =" v)) ; global binding
+(f2)
+(defn f3 []
+  (println "f3: before binding v =" v) ; global binding
+  (binding [v 3] ; same global binding with new, temporary value
+    (println "f3: in binding, v =" v) ; global binding
+    (f1))
+  (println "f3: after binding v =" v)) ; global binding
+(f3)
+(count [19 "yellow" true])
+(reverse [2 4 7]) ; -> (7 4 2)
+(map #(+ % 3) [2 4 7])
+(map + [2 4 7] [5 6] [1 2 3 4])
+(type (map #(+ % 3) [2 4 7]))
+(type [1 2 3])
+(ns com.ociweb.swing
+  (:import
+    (java.awt BorderLayout)
+    (java.awt.event ActionListener)
+    (javax.swing JButton JFrame JLabel JOptionPane JPanel JTextField)))
+(defn message
+  "gets the message to display based on the current text in text-field"
+  1
+  (str "Hello, " (.getText text-field) "!"))
+; Set the initial text in name-field to "World"
+; and its visible width to 10.
+(let [name-field (JTextField. "World" 10)
+      greet-button (JButton. "Greet")
+      panel (JPanel.)
+      frame (proxy [JFrame ActionListener]
+        [] ; superclass constructor arguments
+        (actionPerformed [e] ; nil below is the parent component
+          (JOptionPane/showMessageDialog nil (message name-field))))]
+  (doto panel
+    (.add (JLabel. "Name:"))
+    (.add name-field))
+  (doto frame
+    (.add panel BorderLayout/CENTER)
+    (.add greet-button BorderLayout/SOUTH)
+    (.pack)
+    (.setDefaultCloseOperation JFrame/EXIT_ON_CLOSE)
+    (.setVisible true))
+  ; Register frame to listen for greet-button presses.
+  (.addActionListener greet-button frame))
+(ns com.ociweb.swing
+  (:import
+    (java.awt BorderLayout)
+    (java.awt.event ActionListener)
+    (javax.swing JButton JFrame JLabel JOptionPane JPanel JTextField)))
+(defn message
+  "gets the message to display based on the current text in text-field"
+  1
+  (str "Hello, " (.getText text-field) "!"))
+; Set the initial text in name-field to "World"
+; and its visible width to 10.
+(let [name-field (JTextField. "World" 10)
+      greet-button (JButton. "Greet")
+      panel (JPanel.)
+      frame (proxy [JFrame ActionListener]
+        [] ; superclass constructor arguments
+        (actionPerformed [e] ; nil below is the parent component
+          (JOptionPane/showMessageDialog nil (message name-field))))]
+  (doto panel
+    (.add (JLabel. "Name:"))
+    (.add name-field))
+  (doto frame
+    (.add panel BorderLayout/CENTER)
+    (.add greet-button BorderLayout/SOUTH)
+    (.pack)
+    (.setDefaultCloseOperation JFrame/EXIT_ON_CLOSE)
+    (.setVisible true))
+  ; Register frame to listen for greet-button presses.
+  (.addActionListener greet-button frame))
+*in*
+(read-string)
+(read-string *in*)
+(read *in*)
