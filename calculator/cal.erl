@@ -53,7 +53,8 @@ start_link(Args) when is_list(Args) ->
 %% @doc Initiates the server.
 init(_Args) ->
     process_flag(trap_exit, true),
-    Port = open_port({spawn, "java -cp 'target/*' clojure.main calculator.clj"}, [binary, {packet, 4}]),
+    %%Port = open_port({spawn, "java -cp 'target/*' clojure.main calculator.clj"}, [binary, {packet, 4}]),
+    Port = open_port({spawn, "./start-lisp.sh"}, [binary, {packet, 4}]),
     {ok, #state{port=Port}}.
 
 	%% @spec handle_call(Request, From, State) -> {reply, Reply, State} |
