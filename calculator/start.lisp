@@ -5,13 +5,15 @@
 
 (swank:create-server)
 
-(defvar buf nil)
+(defvar show-content nil)
 
-(setq buf (make-array 4 :element-type '(unsigned-byte 8)))
-(read-sequence buf *standard-input*)
-(defvar result (nibbles:ub32ref/be (coerce buf '(vector (unsigned-byte 8))) 0))
+(defun get-content ()
+  (let ((buf (make-array 4 :element-type '(unsigned-byte 8))))
+    (read-sequence buf *standard-input*)
+    (let* ((result (nibbles:ub32ref/be (coerce buf '(vector (unsigned-byte 8))) 0))
+           (buf (make-array result :element-type '(unsigned-byte 8))))
+      (read-sequence buf *standard-input*)
+      (erlang-term:decode buf))))
 
-(setq buf (make-array result :element-type '(unsigned-byte 8)))
-(read-sequence buf *standard-input*)
-
+(loop (setq show-content (get-content)))
 
